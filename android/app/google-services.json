@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "281425863831",
+    "project_id": "electronic-bookstore-app",
+    "storage_bucket": "electronic-bookstore-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281425863831:android:84d6042bb2d80a83d0f5d2",
+        "android_client_info": {
+          "package_name": "com.example.ebook_store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "281425863831-4to18unpls80h84n49l60ug9oe484qu1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCh7_zQ2ltSsPhvUz8jEaNzq7zwQRMFIB0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "281425863831-4to18unpls80h84n49l60ug9oe484qu1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "281425863831-i7h40l068pjds1o4397t1fab9o12p5ku.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ebookStore"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

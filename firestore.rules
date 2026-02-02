@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // المستخدمين
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // المفضلة (كمجموعة فرعية داخل المستخدم) - هذا يطابق الكود الصحيح
+      match /favorites/{bookId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+    
+    // الكتب
+    match /books/{bookId} {
+      allow read: if true;
+      
+      // السماح للمدمن بالكتابة الكاملة
+      allow create, delete: if request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      
+      // السماح بالتحديث: للمدمن، أو للمستخدم العادي (فقط لزيادة عداد المبيعات)
+      allow update: if request.auth != null && (
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['purchaseCount'])
+      );
+    }
+    
+    // المشتريات
+    match /purchases/{purchaseId} {
+      allow read: if request.auth != null && (resource.data.userId == request.auth.uid || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+    }
+    
+    // المراجعات
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && resource.data.userId == request.auth.uid;
+    }
+    
+    // الفئات
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+  }
+}
